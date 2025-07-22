@@ -197,6 +197,39 @@
         @media (max-width: 600px) {
             .hero-banner .hero-btn { bottom: 8px; font-size: 0.95rem; padding: 7px 10px; }
         }
+        /* صورة المنتج في أحدث المنتجات - حجم كبير ومتجاوب */
+        .latest-products-list .product-img-box {
+            width: 180px;
+            height: 180px;
+            border-radius: 16px;
+            overflow: hidden;
+            margin: 0 auto 10px auto;
+            background: #f8f8f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .latest-products-list .product-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+            display: block;
+            background: #f8f8f8;
+        }
+        @media (max-width: 900px) {
+            .latest-products-list .product-img-box { width: 140px; height: 140px; border-radius: 12px; }
+            .latest-products-list .product-img-box img { border-radius: 12px; }
+        }
+        @media (max-width: 600px) {
+            .latest-products-list .product-img-box { width: 120px; height: 120px; border-radius: 10px; }
+            .latest-products-list .product-img-box img { border-radius: 10px; }
+        }
+        @media (max-width: 400px) {
+            .latest-products-list .product-img-box { width: 90px; height: 90px; border-radius: 8px; }
+            .latest-products-list .product-img-box img { border-radius: 8px; }
+        }
     </style>
 </head>
 <body>
