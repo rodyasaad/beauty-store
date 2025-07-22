@@ -183,19 +183,20 @@
             .banner-carousel-container { height: 80px; border-radius: 0 0 8px 0; }
             .banner-img-responsive { border-radius: 0 0 8px 0; }
         }
-        /* زر تصفح المنتجات وسط البنر دائماً */
+        /* زر تصفح المنتجات أسفل البنر */
         .hero-banner .hero-btn {
-            position: absolute;
-            left: 50%;
-            bottom: 24px;
-            transform: translateX(-50%);
-            z-index: 3;
+            margin-top: 24px;
+            display: inline-block;
+            position: static;
+            left: unset;
+            bottom: unset;
+            transform: none;
         }
         @media (max-width: 900px) {
-            .hero-banner .hero-btn { bottom: 12px; font-size: 1rem; padding: 8px 18px; }
+            .hero-banner .hero-btn { margin-top: 18px; font-size: 1rem; padding: 8px 18px; float: none; display: block; margin-left: auto; margin-right: 0; }
         }
         @media (max-width: 600px) {
-            .hero-banner .hero-btn { bottom: 8px; font-size: 0.95rem; padding: 7px 10px; }
+            .hero-banner .hero-btn { margin-top: 12px; font-size: 0.95rem; padding: 7px 10px; float: none; display: block; margin-left: auto; margin-right: auto; }
         }
         /* صورة المنتج في أحدث المنتجات - حجم كبير ومتجاوب */
         .latest-products-list .product-img-box {
@@ -312,12 +313,12 @@
                 </div>
                 {% if site_info.banner_images and site_info.banner_images|length > 0 %}
                 <!-- البنر: إظهار السلايدر على جميع الشاشات -->
-                <div id="main-banner-carousel" class="carousel slide" data-bs-ride="carousel" style="width:100%; max-width:420px; margin:0 auto; z-index:1; border-radius:0 0 18px 0;">
+                <div id="main-banner-carousel" class="carousel slide banner-carousel-container" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         {% for banner in site_info.banner_images %}
                         <div class="carousel-item {% if loop.index0 == 0 %}active{% endif %}">
                             <a href="javascript:void(0);" onclick="showSection('products'); filterProductsByImage('{{ banner }}'); scrollToProducts();">
-                                <img src="{{ banner if banner.startswith('http') else '/' + banner }}" class="d-block w-100 banner-img-responsive" alt="بانر {{ loop.index }}">
+                                <img src="{{ banner if banner.startswith('http') else '/' + banner }}" class="banner-img-responsive" alt="بانر {{ loop.index }}">
                             </a>
                         </div>
                         {% endfor %}
