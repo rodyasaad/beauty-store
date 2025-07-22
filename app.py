@@ -101,6 +101,39 @@ def save_all_products(products):
     else:
         write_json(PRODUCTS_FILE, {'products': products})
 
+def get_all_banners():
+    if is_vercel():
+        settings = read_gs_settings()
+        client = get_gs_client(settings)
+        sheet = client.open_by_key(settings['sheet_id'])
+        try:
+            ws = sheet.worksheet('banners')
+        except Exception:
+            ws = sheet.add_worksheet(title='banners', rows=1, cols=50)
+        # استرجع كل القيم من العمود الأول كسطر واحد
+        banners = ws.col_values(1)
+        return banners
+    else:
+        site_info = read_json(SITE_INFO_FILE)
+        return site_info.get('banner_images', [])
+
+def save_all_banners(banner_images):
+    if is_vercel():
+        settings = read_gs_settings()
+        client = get_gs_client(settings)
+        sheet = client.open_by_key(settings['sheet_id'])
+        try:
+            ws = sheet.worksheet('banners')
+        except Exception:
+            ws = sheet.add_worksheet(title='banners', rows=1, cols=50)
+        ws.clear()
+        if banner_images:
+            ws.update('A1', [[img] for img in banner_images])
+    else:
+        site_info = read_json(SITE_INFO_FILE)
+        site_info['banner_images'] = banner_images
+        write_json(SITE_INFO_FILE, site_info)
+
 @app.route('/')
 def index():
     products = get_all_products()
@@ -110,9 +143,8 @@ def index():
     categories_with_products = [cat for cat in categories if cat != 'غير مصنف' and any(p.get('category') == cat for p in products)]
     # تجهيز قائمة البنرات بشكل متوافق مع القالب
     banners = []
-    if site_info.get('banner_images'):
-        for img in site_info['banner_images']:
-            banners.append({'image_url': img})
+    for img in get_all_banners():
+        banners.append({'image_url': img})
     return render_template('index.html', products=products, site_info=site_info, categories=categories, categories_with_products=categories_with_products, banners=banners)
 
 # صفحة تسجيل الدخول
@@ -236,15 +268,15 @@ def admin_banner():
     site_info = read_json(SITE_INFO_FILE)
     if request.method == 'POST':
         try:
-            # اجمع جميع الحقول banner_images
             banner_images = request.form.getlist('banner_images')
-            site_info['banner_images'] = banner_images
-            write_json(SITE_INFO_FILE, site_info)
+            save_all_banners(banner_images)
             flash('تم حفظ البنرات بنجاح!')
             return redirect(url_for('admin_banner'))
         except Exception as e:
             flash(f'حدث خطأ أثناء حفظ البنرات: {e}')
+            site_info['banner_images'] = get_all_banners()
             return render_template('admin_banner.html', site_info=site_info)
+    site_info['banner_images'] = get_all_banners()
     return render_template('admin_banner.html', site_info=site_info)
 
 # تعديل معلومات الموقع
