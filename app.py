@@ -286,15 +286,15 @@ def admin_site_info():
         return redirect(url_for('admin_login'))
     site_info = read_json(SITE_INFO_FILE)
     if request.method == 'POST':
-        site_info['site_name'] = request.form['site_name']
-        site_info['description'] = request.form['description']
-        site_info['whatsapp'] = request.form['whatsapp']
-        site_info['instagram'] = request.form['instagram']
-        site_info['tiktok'] = request.form['tiktok']
-        site_info['email'] = request.form['email']
-        site_info['about'] = request.form['about']
-        site_info['policy'] = request.form['policy']
-        site_info['currency'] = request.form['currency']
+        site_info['site_name'] = request.form.get('site_name', '')
+        site_info['description'] = request.form.get('description', '')
+        site_info['whatsapp'] = request.form.get('whatsapp', '')
+        site_info['instagram'] = request.form.get('instagram', '')
+        site_info['tiktok'] = request.form.get('tiktok', '')
+        site_info['email'] = request.form.get('email', '')
+        site_info['about'] = request.form.get('about', '')
+        site_info['policy'] = request.form.get('policy', '')
+        site_info['currency'] = request.form.get('currency', '')
         write_json(SITE_INFO_FILE, site_info)
         return redirect(url_for('admin_site_info'))
     return render_template('admin_site_info.html', site_info=site_info)
