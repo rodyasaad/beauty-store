@@ -1,0 +1,83 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+<h3>إدارة المنتجات</h3>
+<a href="/admin/products/add" class="btn btn-success mb-3">إضافة منتج جديد</a>
+<div class="table-responsive d-none d-sm-block">
+<table class="table table-bordered table-striped align-middle text-center">
+    <thead>
+        <tr>
+            <th style="width:120px;">الصورة</th>
+            <th>الاسم</th>
+            <th>الوصف</th>
+            <th>السعر</th>
+            <th>واتساب</th>
+            <th>إجراءات</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <td>
+                <img src="{% if product.image.startswith('http') %}{{ product.image }}{% else %}/{{ product.image }}{% endif %}" alt="{{ product.name }}" class="product-img-admin">
+            </td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.whatsapp }}</td>
+            <td>
+                <a href="/admin/products/edit/{{ product.id }}" class="btn btn-sm btn-primary">تعديل</a>
+                <a href="/admin/products/delete/{{ product.id }}" class="btn btn-sm btn-danger" onclick="return confirm('هل أنت متأكد من الحذف؟');">حذف</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+<!-- عرض المنتجات كبطاقات في الموبايل -->
+<div class="d-block d-sm-none">
+    {% for product in products %}
+    <div class="card mb-3 p-2" style="border-radius:12px; box-shadow:0 2px 8px #e0e0e0;">
+        <div class="d-flex align-items-center gap-2">
+            <img src="{% if product.image.startswith('http') %}{{ product.image }}{% else %}/{{ product.image }}{% endif %}" alt="{{ product.name }}" style="width:60px; height:60px; object-fit:cover; border-radius:8px; background:#f8f8f8;">
+            <div>
+                <div style="font-weight:bold; color:#0ea47a;">{{ product.name }}</div>
+                <div style="font-size:0.95em; color:#666;">{{ product.description }}</div>
+                <div style="font-size:0.95em; color:#1cb5e0;">{{ product.price }}</div>
+                <div style="font-size:0.9em; color:#888;">واتساب: {{ product.whatsapp }}</div>
+                <div class="mt-1">
+                    <a href="/admin/products/edit/{{ product.id }}" class="btn btn-sm btn-primary">تعديل</a>
+                    <a href="/admin/products/delete/{{ product.id }}" class="btn btn-sm btn-danger" onclick="return confirm('هل أنت متأكد من الحذف؟');">حذف</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<style>
+.product-img-admin {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #ccc;
+    background: #f8f8f8;
+}
+@media (max-width: 900px) {
+    .product-img-admin {
+        width: 48px;
+        height: 48px;
+    }
+    h3 { font-size: 1rem; }
+    .table th, .table td { font-size: 0.85rem; padding: 4px 1px; }
+}
+@media (max-width: 600px) {
+    .product-img-admin {
+        width: 36px;
+        height: 36px;
+    }
+    h3 { font-size: 0.95rem; }
+    .table th, .table td { font-size: 0.78rem; padding: 2px 0.5px; }
+    .table-responsive { overflow-x: auto; }
+}
+</style>
+{% endblock %} 

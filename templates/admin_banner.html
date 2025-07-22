@@ -1,0 +1,38 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+<h3>تعديل البنرات الرئيسية</h3>
+<form method="post">
+    <div id="banners-list">
+        {% for banner in site_info.banner_images %}
+        <div class="mb-3 banner-input-row">
+            <label class="form-label">رابط صورة البنر رقم {{ loop.index }}</label>
+            <input type="text" name="banner_images" class="form-control" value="{{ banner }}" placeholder="مثال: https://i.imgur.com/xxxxxx.jpg أو static/images/banner1.jpg" required>
+            <button type="button" class="btn btn-danger btn-sm mt-2 remove-banner-btn">حذف</button>
+        </div>
+        {% endfor %}
+    </div>
+    <button type="button" class="btn btn-info mb-3" id="add-banner-btn">إضافة بنر جديد</button>
+    <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+</form>
+<script>
+// إضافة حقل بنر جديد
+const addBtn = document.getElementById('add-banner-btn');
+const bannersList = document.getElementById('banners-list');
+addBtn.onclick = function() {
+    const idx = bannersList.children.length + 1;
+    const div = document.createElement('div');
+    div.className = 'mb-3 banner-input-row';
+    div.innerHTML = `<label class='form-label'>رابط صورة البنر رقم ${idx}</label><input type='text' name='banner_images' class='form-control' placeholder='مثال: https://i.imgur.com/xxxxxx.jpg أو static/images/banner1.jpg' required><button type='button' class='btn btn-danger btn-sm mt-2 remove-banner-btn'>حذف</button>`;
+    bannersList.appendChild(div);
+    updateRemoveBtns();
+};
+function updateRemoveBtns() {
+    document.querySelectorAll('.remove-banner-btn').forEach(btn => {
+        btn.onclick = function() {
+            btn.parentElement.remove();
+        };
+    });
+}
+updateRemoveBtns();
+</script>
+{% endblock %} 

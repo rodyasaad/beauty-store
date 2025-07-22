@@ -1,0 +1,33 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+<h3>إعدادات Google Sheets</h3>
+<form method="post">
+    <div class="mb-3">
+        <label class="form-label">Google Sheet ID</label>
+        <input type="text" name="sheet_id" class="form-control" value="{{ settings.sheet_id }}" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">اسم الورقة (Sheet Name)</label>
+        <input type="text" name="sheet_name" class="form-control" value="{{ settings.sheet_name }}" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">بيانات اعتماد Google Service Account (JSON)</label>
+        <textarea name="service_account_json" class="form-control" rows="8" required>{{ settings.service_account_json }}</textarea>
+        <div class="form-text text-danger">يجب أن تبقى هذه البيانات سرية.</div>
+    </div>
+    <button type="submit" class="btn btn-primary">حفظ الإعدادات</button>
+</form>
+<hr>
+<form method="post" style="display:inline;" action="/admin/google-sheets/import">
+    <button type="submit" class="btn btn-success">استيراد المنتجات من Google Sheets</button>
+</form>
+<form method="post" style="display:inline; margin-right:10px;" action="/admin/google-sheets/export">
+    <button type="submit" class="btn btn-info">تصدير المنتجات إلى Google Sheets</button>
+</form>
+<form method="post" style="display:inline; margin-right:10px;" action="/admin/google-sheets/test">
+    <button type="submit" class="btn btn-secondary">اختبار الاتصال</button>
+</form>
+{% if message %}
+<div class="alert alert-info mt-3">{{ message }}</div>
+{% endif %}
+{% endblock %} 

@@ -1,0 +1,22 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "كريم الورد - كود 001",
+      "description": "لتنظيف وتبييض وشد البشرة",
+      "price": 12000,
+      "image": "https://i.postimg.cc/j2GqQ0b8/In-Shot.jpg",
+      "whatsapp": 963997129210,
+      "category": "جمال"
+    },
+    {
+      "id": 2,
+      "name": "كلسون بوكسر - كود 002",
+      "description": "قطن 100 %",
+      "price": 250000,
+      "image": "https://i.postimg.cc/HsVnBPcr/images.jpg",
+      "whatsapp": 963997129210,
+      "category": "قطنيات"
+    }
+  ]
+}

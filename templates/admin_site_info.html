@@ -1,0 +1,47 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+<h3>تعديل معلومات الموقع</h3>
+<form method="post">
+    <div class="mb-3">
+        <label class="form-label">اسم الموقع</label>
+        <input type="text" name="site_name" class="form-control" value="{{ site_info.site_name }}" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">وصف قصير</label>
+        <input type="text" name="description" class="form-control" value="{{ site_info.description }}" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">رقم الواتساب</label>
+        <input type="text" name="whatsapp" class="form-control" value="{{ site_info.whatsapp }}" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">رابط إنستغرام</label>
+        <input type="text" name="instagram" class="form-control" value="{{ site_info.instagram }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">رابط تيك توك</label>
+        <input type="text" name="tiktok" class="form-control" value="{{ site_info.tiktok }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">البريد الإلكتروني</label>
+        <input type="email" name="email" class="form-control" value="{{ site_info.email }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">العملة</label>
+        <select name="currency" class="form-select">
+            <option value="ل.س" {% if site_info.currency == 'ل.س' %}selected{% endif %}>ليرة سورية</option>
+            <option value="$" {% if site_info.currency == '$' %}selected{% endif %}>دولار</option>
+            <option value="€" {% if site_info.currency == '€' %}selected{% endif %}>يورو</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">من نحن</label>
+        <textarea name="about" class="form-control" required>{{ site_info.about }}</textarea>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">سياسة الاستخدام</label>
+        <textarea name="policy" class="form-control" required>{{ site_info.policy }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+</form>
+{% endblock %} 

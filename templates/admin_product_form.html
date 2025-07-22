@@ -1,0 +1,57 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+<h3>{{ 'تعديل' if product else 'إضافة' }} منتج</h3>
+<form method="post">
+    <div class="mb-3">
+        <label class="form-label">اسم المنتج</label>
+        <input type="text" name="name" class="form-control" value="{{ product.name if product else '' }}" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">وصف مختصر</label>
+        <textarea name="description" class="form-control" required>{{ product.description if product else '' }}</textarea>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">السعر</label>
+        <input type="number" name="price" class="form-control" value="{{ product.price if product else '' }}" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">رقم الواتساب</label>
+        <input type="text" name="whatsapp" class="form-control" value="{{ product.whatsapp if product else '' }}" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">التصنيف</label>
+        <select name="category" class="form-select" id="category-select">
+            {% for cat in categories %}
+            <option value="{{ cat }}" {% if product and product.category == cat %}selected{% endif %}>{{ cat }}</option>
+            {% endfor %}
+        </select>
+        <input type="text" name="new_category" class="form-control mt-2" placeholder="أضف تصنيف جديد (اختياري)" id="new-category-input">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">رابط الصورة</label>
+        <input type="text" name="image" class="form-control" value="{{ product.image if product else '' }}" placeholder="مثال: https://i.imgur.com/xxxxxx.jpg أو static/images/اسم_الصورة.jpg" required>
+        {% if product and product.image %}
+        <img src="{{ product.image if product.image.startswith('http') else '/' + product.image }}" alt="صورة المنتج" style="width:80px; margin-top:10px; border-radius:6px;">
+        {% endif %}
+    </div>
+    <button type="submit" class="btn btn-primary">حفظ</button>
+    <a href="/admin/products" class="btn btn-secondary">إلغاء</a>
+</form>
+<script>
+// عند إدخال تصنيف جديد، يتم اختياره تلقائياً
+const newCatInput = document.getElementById('new-category-input');
+const catSelect = document.getElementById('category-select');
+if (newCatInput && catSelect) {
+    newCatInput.addEventListener('input', function() {
+        if (this.value.trim() !== '') {
+            catSelect.value = '';
+        }
+    });
+    catSelect.addEventListener('change', function() {
+        if (this.value !== '') {
+            newCatInput.value = '';
+        }
+    });
+}
+</script>
+{% endblock %} 
