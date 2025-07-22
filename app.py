@@ -139,18 +139,27 @@ def get_site_info():
         settings = read_gs_settings()
         client = get_gs_client(settings)
         sheet = client.open_by_key(settings['sheet_id'])
+        sheet_name = settings.get('sheet_name', 'Sheet1') or 'Sheet1'
         try:
-            ws = sheet.worksheet('site_info')
+            ws = sheet.worksheet(sheet_name)
         except Exception:
-            ws = sheet.add_worksheet(title='site_info', rows=2, cols=10)
-            ws.update('A1', [["site_name","description","whatsapp","instagram","tiktok","email","currency","about","policy"]])
-            ws.update('A2', [["متجري الإلكتروني","أفضل المنتجات بأفضل الأسعار.","","","","","ل.س","",""]])
+            ws = sheet.add_worksheet(title=sheet_name, rows=12, cols=2)
+            ws.update('A1:B10', [["key", "value"],
+                                 ["site_name", ""],
+                                 ["description", ""],
+                                 ["whatsapp", ""],
+                                 ["instagram", ""],
+                                 ["tiktok", ""],
+                                 ["email", ""],
+                                 ["about", ""],
+                                 ["policy", ""],
+                                 ["currency", ""]])
         values = ws.get_all_values()
-        if len(values) < 2:
-            return {}
-        header = values[0]
-        data = values[1]
-        return dict(zip(header, data))
+        site_info = {}
+        for row in values[1:]:
+            if len(row) >= 2:
+                site_info[row[0]] = row[1]
+        return site_info
     else:
         return read_json(SITE_INFO_FILE)
 
@@ -159,14 +168,26 @@ def save_site_info(site_info):
         settings = read_gs_settings()
         client = get_gs_client(settings)
         sheet = client.open_by_key(settings['sheet_id'])
+        sheet_name = settings.get('sheet_name', 'Sheet1') or 'Sheet1'
         try:
-            ws = sheet.worksheet('site_info')
+            ws = sheet.worksheet(sheet_name)
         except Exception:
-            ws = sheet.add_worksheet(title='site_info', rows=2, cols=10)
-            ws.update('A1', [["site_name","description","whatsapp","instagram","tiktok","email","currency","about","policy"]])
-        header = ["site_name","description","whatsapp","instagram","tiktok","email","currency","about","policy"]
-        row = [site_info.get(h, "") for h in header]
-        ws.update('A2', [row])
+            ws = sheet.add_worksheet(title=sheet_name, rows=12, cols=2)
+            ws.update('A1:B10', [["key", "value"],
+                                 ["site_name", ""],
+                                 ["description", ""],
+                                 ["whatsapp", ""],
+                                 ["instagram", ""],
+                                 ["tiktok", ""],
+                                 ["email", ""],
+                                 ["about", ""],
+                                 ["policy", ""],
+                                 ["currency", ""]])
+        # تحديث القيم في العمود B حسب المفاتيح في العمود A
+        values = ws.get_all_values()
+        keys = [row[0] for row in values[1:]]
+        for i, key in enumerate(keys, start=2):
+            ws.update(f'B{i}', site_info.get(key, ""))
     else:
         write_json(SITE_INFO_FILE, site_info)
 
