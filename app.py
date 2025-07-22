@@ -235,11 +235,16 @@ def admin_banner():
         return redirect(url_for('admin_login'))
     site_info = read_json(SITE_INFO_FILE)
     if request.method == 'POST':
-        # اجمع جميع الحقول banner_images
-        banner_images = request.form.getlist('banner_images')
-        site_info['banner_images'] = banner_images
-        write_json(SITE_INFO_FILE, site_info)
-        return redirect(url_for('admin_banner'))
+        try:
+            # اجمع جميع الحقول banner_images
+            banner_images = request.form.getlist('banner_images')
+            site_info['banner_images'] = banner_images
+            write_json(SITE_INFO_FILE, site_info)
+            flash('تم حفظ البنرات بنجاح!')
+            return redirect(url_for('admin_banner'))
+        except Exception as e:
+            flash(f'حدث خطأ أثناء حفظ البنرات: {e}')
+            return render_template('admin_banner.html', site_info=site_info)
     return render_template('admin_banner.html', site_info=site_info)
 
 # تعديل معلومات الموقع
