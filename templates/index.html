@@ -615,13 +615,17 @@
                 </div>
                 <!-- البنر مع أزرار التنقل -->
                 <div id="bannerCarousel" class="banner-carousel-container position-relative">
-                    {% if banners|length > 1 %}
+                    {% if banners and banners|length > 1 %}
                     <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev" style="position:absolute;top:50%;left:10px;transform:translateY(-50%);z-index:2;background:#fff;border-radius:50%;border:none;width:32px;height:32px;display:flex;align-items:center;justify-content:center;">
                         <span aria-hidden="true">&#8592;</span>
                     </button>
                     {% endif %}
-                    <img src="{{ banners[0].image_url }}" alt="بنر" class="banner-img-responsive">
-                    {% if banners|length > 1 %}
+                    {% if banners and banners|length > 0 %}
+                        <img src="{{ banners[0].image_url }}" alt="بنر" class="banner-img-responsive">
+                    {% else %}
+                        <img src="/static/images/banner_signal----_002.png" alt="بنر افتراضي" class="banner-img-responsive">
+                    {% endif %}
+                    {% if banners and banners|length > 1 %}
                     <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);z-index:2;background:#fff;border-radius:50%;border:none;width:32px;height:32px;display:flex;align-items:center;justify-content:center;">
                         <span aria-hidden="true">&#8594;</span>
                     </button>
