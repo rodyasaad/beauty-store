@@ -72,7 +72,7 @@ def get_all_products():
         settings = read_gs_settings()
         client = get_gs_client(settings)
         sheet = client.open_by_key(settings['sheet_id'])
-        ws = sheet.worksheet(settings['sheet_name'])
+        ws = sheet.worksheet('Sheet1')
         rows = ws.get_all_records()
         return rows
     else:
@@ -83,7 +83,7 @@ def save_all_products(products):
         settings = read_gs_settings()
         client = get_gs_client(settings)
         sheet = client.open_by_key(settings['sheet_id'])
-        ws = sheet.worksheet(settings['sheet_name'])
+        ws = sheet.worksheet('Sheet1')
         header = ['id', 'name', 'description', 'price', 'image', 'whatsapp', 'category']
         data = [header]
         for p in products:
@@ -110,7 +110,6 @@ def get_all_banners():
             ws = sheet.worksheet('banners')
         except Exception:
             ws = sheet.add_worksheet(title='banners', rows=1, cols=50)
-        # استرجع كل القيم من العمود الأول كسطر واحد
         banners = ws.col_values(1)
         return banners
     else:
@@ -139,7 +138,7 @@ def get_site_info():
         settings = read_gs_settings()
         client = get_gs_client(settings)
         sheet = client.open_by_key(settings['sheet_id'])
-        sheet_name = settings.get('sheet_name', 'Sheet1') or 'Sheet1'
+        sheet_name = 'site_info'
         try:
             ws = sheet.worksheet(sheet_name)
         except Exception:
@@ -159,6 +158,7 @@ def get_site_info():
         for row in values[1:]:
             if len(row) >= 2:
                 site_info[row[0]] = row[1]
+        print('قراءة معلومات الموقع من Google Sheets:', site_info)
         return site_info
     else:
         return read_json(SITE_INFO_FILE)
@@ -168,7 +168,7 @@ def save_site_info(site_info):
         settings = read_gs_settings()
         client = get_gs_client(settings)
         sheet = client.open_by_key(settings['sheet_id'])
-        sheet_name = settings.get('sheet_name', 'Sheet1') or 'Sheet1'
+        sheet_name = 'site_info'
         try:
             ws = sheet.worksheet(sheet_name)
         except Exception:
@@ -183,9 +183,9 @@ def save_site_info(site_info):
                                  ["about", ""],
                                  ["policy", ""],
                                  ["currency", ""]])
-        # تحديث القيم في العمود B حسب المفاتيح في العمود A
         values = ws.get_all_values()
         keys = [row[0] for row in values[1:]]
+        print('سيتم حفظ معلومات الموقع في Google Sheets:', {k: site_info.get(k, "") for k in keys})
         for i, key in enumerate(keys, start=2):
             ws.update(f'B{i}', site_info.get(key, ""))
     else:
