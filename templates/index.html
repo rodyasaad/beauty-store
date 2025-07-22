@@ -546,19 +546,35 @@
         }
         .banner-img-responsive {
             max-width: 100%;
-            max-height: 100%;
+            max-height: 220px;
             object-fit: contain;
             border-radius: 0 0 18px 0;
             display: block;
             background: #fff;
         }
         @media (max-width: 600px) {
-            .banner-carousel-container { height: 120px; border-radius: 0 0 12px 0; }
-            .banner-img-responsive { border-radius: 0 0 12px 0; }
+            .banner-carousel-container {
+                height: 45vw;
+                min-height: 120px;
+                max-height: 60vw;
+                border-radius: 0 0 12px 0;
+            }
+            .banner-img-responsive {
+                border-radius: 0 0 12px 0;
+                max-height: 60vw;
+            }
         }
         @media (max-width: 400px) {
-            .banner-carousel-container { height: 80px; border-radius: 0 0 8px 0; }
-            .banner-img-responsive { border-radius: 0 0 8px 0; }
+            .banner-carousel-container {
+                height: 55vw;
+                min-height: 80px;
+                max-height: 80vw;
+                border-radius: 0 0 8px 0;
+            }
+            .banner-img-responsive {
+                border-radius: 0 0 8px 0;
+                max-height: 80vw;
+            }
         }
     </style>
 </head>
@@ -632,19 +648,35 @@
             }
             .banner-img-responsive {
                 max-width: 100%;
-                max-height: 100%;
+                max-height: 220px;
                 object-fit: contain;
                 border-radius: 0 0 18px 0;
                 display: block;
                 background: #fff;
             }
             @media (max-width: 600px) {
-                .banner-carousel-container { height: 120px; border-radius: 0 0 12px 0; }
-                .banner-img-responsive { border-radius: 0 0 12px 0; }
+                .banner-carousel-container {
+                    height: 45vw;
+                    min-height: 120px;
+                    max-height: 60vw;
+                    border-radius: 0 0 12px 0;
+                }
+                .banner-img-responsive {
+                    border-radius: 0 0 12px 0;
+                    max-height: 60vw;
+                }
             }
             @media (max-width: 400px) {
-                .banner-carousel-container { height: 80px; border-radius: 0 0 8px 0; }
-                .banner-img-responsive { border-radius: 0 0 8px 0; }
+                .banner-carousel-container {
+                    height: 55vw;
+                    min-height: 80px;
+                    max-height: 80vw;
+                    border-radius: 0 0 8px 0;
+                }
+                .banner-img-responsive {
+                    border-radius: 0 0 8px 0;
+                    max-height: 80vw;
+                }
             }
             </style>
             <!-- بطاقات إحصائيات -->
