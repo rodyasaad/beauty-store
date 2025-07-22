@@ -295,8 +295,12 @@ def admin_site_info():
         site_info['about'] = request.form.get('about', '')
         site_info['policy'] = request.form.get('policy', '')
         site_info['currency'] = request.form.get('currency', '')
-        write_json(SITE_INFO_FILE, site_info)
-        return redirect(url_for('admin_site_info'))
+        try:
+            write_json(SITE_INFO_FILE, site_info)
+            return redirect(url_for('admin_site_info'))
+        except Exception as e:
+            error_message = f'حدث خطأ أثناء حفظ معلومات الموقع: {e}'
+            return render_template('admin_site_info.html', site_info=site_info, error_message=error_message)
     return render_template('admin_site_info.html', site_info=site_info)
 
 @app.route('/admin/google-sheets', methods=['GET', 'POST'])
