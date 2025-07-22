@@ -297,6 +297,7 @@ def admin_site_info():
         site_info['currency'] = request.form.get('currency', '')
         try:
             write_json(SITE_INFO_FILE, site_info)
+            print('تم حفظ معلومات الموقع بنجاح')
             return redirect(url_for('admin_site_info'))
         except Exception as e:
             error_message = f'حدث خطأ أثناء حفظ معلومات الموقع: {e}'
