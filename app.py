@@ -108,7 +108,12 @@ def index():
     categories = list({p.get('category', 'غير مصنف') for p in products})
     # تصنيفات لديها منتجات فقط
     categories_with_products = [cat for cat in categories if cat != 'غير مصنف' and any(p.get('category') == cat for p in products)]
-    return render_template('index.html', products=products, site_info=site_info, categories=categories, categories_with_products=categories_with_products)
+    # تجهيز قائمة البنرات بشكل متوافق مع القالب
+    banners = []
+    if site_info.get('banner_images'):
+        for img in site_info['banner_images']:
+            banners.append({'image_url': img})
+    return render_template('index.html', products=products, site_info=site_info, categories=categories, categories_with_products=categories_with_products, banners=banners)
 
 # صفحة تسجيل الدخول
 @app.route('/admin/login', methods=['GET', 'POST'])
