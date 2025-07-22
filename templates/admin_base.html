@@ -6,12 +6,8 @@
     <title>لوحة التحكم - {{ title or '' }}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Tajawal', Arial, sans-serif;
-            background: #f4f6fa;
-        }
+        body { font-family: 'Tajawal', Arial, sans-serif; background: #f4f6fa; }
         .sidebar {
             position: fixed;
             top: 0; right: 0; bottom: 0;
@@ -37,16 +33,15 @@
             border-radius: 8px !important;
             margin-bottom: 10px;
             display: block;
-            width: 90%;
+            width: 100%;
             text-align: center;
             padding: 10px 0;
             font-size: 1.1rem;
             box-shadow: none !important;
-            margin-inline: auto;
             transition: background 0.15s;
         }
         .btn-sidebar:active, .btn-sidebar:focus, .btn-sidebar:hover {
-            background: #0ea4c6 !important; /* أغمق عند التحويم */
+            background: #0ea4c6 !important; /* درجة أغمق عند التحويم */
             color: #fff !important;
             outline: none !important;
         }
@@ -58,6 +53,7 @@
             .sidebar { width: 100vw; left: 0; right: 0; }
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="sidebar">
@@ -69,15 +65,10 @@
         <button type="button" class="btn-sidebar" onclick="window.location.href='/admin/site-info'"><i class="fa-solid fa-info-circle"></i> معلومات الموقع</button>
         <button type="button" class="btn-sidebar" onclick="window.location.href='/admin/google-sheets'"><i class="fa-brands fa-google-drive"></i> Google Sheets</button>
         <button type="button" class="btn-sidebar" onclick="window.location.href='/'"><i class="fa-solid fa-store"></i> العودة للمتجر</button>
-        
-        <!-- تسجيل الخروج بنفس تنسيق الأزرار -->
-        <form action="/admin/logout" method="get">
-            <button type="submit" class="btn-sidebar"><i class="fa-solid fa-sign-out-alt"></i> تسجيل الخروج</button>
-        </form>
+        <button type="button" class="btn-sidebar" onclick="window.location.href='/admin/logout'"><i class="fa-solid fa-sign-out-alt"></i> تسجيل الخروج</button>
     </div>
-
     <div class="main-content">
         {% block content %}{% endblock %}
     </div>
 </body>
-</html>
+</html> 
