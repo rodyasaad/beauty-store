@@ -134,14 +134,49 @@ def save_all_banners(banner_images):
         site_info['banner_images'] = banner_images
         write_json(SITE_INFO_FILE, site_info)
 
+def get_site_info():
+    if is_vercel():
+        settings = read_gs_settings()
+        client = get_gs_client(settings)
+        sheet = client.open_by_key(settings['sheet_id'])
+        try:
+            ws = sheet.worksheet('site_info')
+        except Exception:
+            ws = sheet.add_worksheet(title='site_info', rows=2, cols=10)
+            ws.update('A1', [["site_name","description","whatsapp","instagram","tiktok","email","currency","about","policy"]])
+            ws.update('A2', [["متجري الإلكتروني","أفضل المنتجات بأفضل الأسعار.","","","","","ل.س","",""]])
+        values = ws.get_all_values()
+        if len(values) < 2:
+            return {}
+        header = values[0]
+        data = values[1]
+        return dict(zip(header, data))
+    else:
+        return read_json(SITE_INFO_FILE)
+
+def save_site_info(site_info):
+    if is_vercel():
+        settings = read_gs_settings()
+        client = get_gs_client(settings)
+        sheet = client.open_by_key(settings['sheet_id'])
+        try:
+            ws = sheet.worksheet('site_info')
+        except Exception:
+            ws = sheet.add_worksheet(title='site_info', rows=2, cols=10)
+            ws.update('A1', [["site_name","description","whatsapp","instagram","tiktok","email","currency","about","policy"]])
+        header = ["site_name","description","whatsapp","instagram","tiktok","email","currency","about","policy"]
+        row = [site_info.get(h, "") for h in header]
+        ws.update('A2', [row])
+    else:
+        write_json(SITE_INFO_FILE, site_info)
+
+# عدل دالة index
 @app.route('/')
 def index():
     products = get_all_products()
-    site_info = read_json(SITE_INFO_FILE)
+    site_info = get_site_info()
     categories = list({p.get('category', 'غير مصنف') for p in products})
-    # تصنيفات لديها منتجات فقط
     categories_with_products = [cat for cat in categories if cat != 'غير مصنف' and any(p.get('category') == cat for p in products)]
-    # تجهيز قائمة البنرات بشكل متوافق مع القالب
     banners = []
     for img in get_all_banners():
         banners.append({'image_url': img})
@@ -284,7 +319,7 @@ def admin_banner():
 def admin_site_info():
     if not is_logged_in():
         return redirect(url_for('admin_login'))
-    site_info = read_json(SITE_INFO_FILE)
+    site_info = get_site_info()
     if request.method == 'POST':
         site_info['site_name'] = request.form.get('site_name', '')
         site_info['description'] = request.form.get('description', '')
@@ -296,7 +331,7 @@ def admin_site_info():
         site_info['policy'] = request.form.get('policy', '')
         site_info['currency'] = request.form.get('currency', '')
         try:
-            write_json(SITE_INFO_FILE, site_info)
+            save_site_info(site_info)
             print('تم حفظ معلومات الموقع بنجاح')
             flash('تم حفظ معلومات الموقع بنجاح!')
             return redirect(url_for('admin_site_info'))
@@ -393,10 +428,11 @@ def admin_google_sheets_export():
         message = f'فشل التصدير: {e}'
     return render_template('admin_google_sheets.html', settings=settings, message=message)
 
+# عدل دالة products_page
 @app.route('/products')
 def products_page():
     products = get_all_products()
-    site_info = read_json(SITE_INFO_FILE)
+    site_info = get_site_info()
     categories = list({p.get('category', 'غير مصنف') for p in products})
     return render_template('products.html', products=products, site_info=site_info, categories=categories, selected_category=None)
 
