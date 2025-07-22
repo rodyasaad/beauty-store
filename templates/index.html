@@ -539,7 +539,7 @@
             z-index: 1;
             border-radius: 0 0 18px 0;
             background: #fff;
-            aspect-ratio: 16 / 7;
+            height: 220px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -555,7 +555,7 @@
         @media (max-width: 600px) {
             .banner-carousel-container {
                 border-radius: 0 0 12px 0;
-                aspect-ratio: 16 / 9;
+                height: 160px;
             }
             .banner-img-responsive {
                 border-radius: 0 0 12px 0;
@@ -564,7 +564,7 @@
         @media (max-width: 400px) {
             .banner-carousel-container {
                 border-radius: 0 0 8px 0;
-                aspect-ratio: 16 / 11;
+                height: 120px;
             }
             .banner-img-responsive {
                 border-radius: 0 0 8px 0;
@@ -613,18 +613,19 @@
                     <div class="hero-desc">{{ site_info.description }}</div>
                     <button class="hero-btn" onclick="showSection('products'); scrollToProducts();">تصفح المنتجات <i class="fa fa-arrow-left"></i></button>
                 </div>
-                <div id="main-banner-carousel" class="carousel slide banner-carousel-container" data-bs-ride="carousel">
-                    <div class="carousel-inner" style="height:100%;">
-                        <div class="carousel-item active d-flex justify-content-center align-items-center" style="height:100%;">
-                            <img src="https://i.postimg.cc/j2GqQ0b8/In-Shot.jpg" class="banner-img-responsive" alt="بانر 1">
-                        </div>
-                        <div class="carousel-item d-flex justify-content-center align-items-center" style="height:100%;">
-                            <img src="https://i.postimg.cc/HsVnBPcr/images.jpg" class="banner-img-responsive" alt="بانر 2">
-                        </div>
-                        <div class="carousel-item d-flex justify-content-center align-items-center" style="height:100%;">
-                            <img src="https://i.postimg.cc/MpwTqZ3Q/image.jpg" class="banner-img-responsive" alt="بانر 3">
-                        </div>
-                    </div>
+                <!-- البنر مع أزرار التنقل -->
+                <div id="bannerCarousel" class="banner-carousel-container position-relative">
+                    {% if banners|length > 1 %}
+                    <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev" style="position:absolute;top:50%;left:10px;transform:translateY(-50%);z-index:2;background:#fff;border-radius:50%;border:none;width:32px;height:32px;display:flex;align-items:center;justify-content:center;">
+                        <span aria-hidden="true">&#8592;</span>
+                    </button>
+                    {% endif %}
+                    <img src="{{ banners[0].image_url }}" alt="بنر" class="banner-img-responsive">
+                    {% if banners|length > 1 %}
+                    <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);z-index:2;background:#fff;border-radius:50%;border:none;width:32px;height:32px;display:flex;align-items:center;justify-content:center;">
+                        <span aria-hidden="true">&#8594;</span>
+                    </button>
+                    {% endif %}
                 </div>
             </div>
             <style>
@@ -635,7 +636,7 @@
                 z-index: 1;
                 border-radius: 0 0 18px 0;
                 background: #fff;
-                aspect-ratio: 16 / 7;
+                height: 220px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -651,7 +652,7 @@
             @media (max-width: 600px) {
                 .banner-carousel-container {
                     border-radius: 0 0 12px 0;
-                    aspect-ratio: 16 / 9;
+                    height: 160px;
                 }
                 .banner-img-responsive {
                     border-radius: 0 0 12px 0;
@@ -660,7 +661,7 @@
             @media (max-width: 400px) {
                 .banner-carousel-container {
                     border-radius: 0 0 8px 0;
-                    aspect-ratio: 16 / 11;
+                    height: 120px;
                 }
                 .banner-img-responsive {
                     border-radius: 0 0 8px 0;
