@@ -315,13 +315,25 @@
                 <!-- البنر: إظهار السلايدر على جميع الشاشات -->
                 <div id="main-banner-carousel" class="carousel slide banner-carousel-container" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        {% for banner in site_info.banner_images %}
-                        <div class="carousel-item {% if loop.index0 == 0 %}active{% endif %}">
-                            <a href="javascript:void(0);" onclick="showSection('products'); filterProductsByImage('{{ banner }}'); scrollToProducts();">
-                                <img src="{{ banner if banner.startswith('http') else '/' + banner }}" class="banner-img-responsive" alt="بانر {{ loop.index }}">
+                        
+                        <div class="carousel-item active">
+                            <a href="javascript:void(0);" onclick="showSection('products'); filterProductsByImage('https://i.postimg.cc/j2GqQ0b8/In-Shot.jpg'); scrollToProducts();">
+                                <img src="https://i.postimg.cc/j2GqQ0b8/In-Shot.jpg" class="banner-img-responsive" alt="بانر 1">
                             </a>
                         </div>
-                        {% endfor %}
+                        
+                        <div class="carousel-item">
+                            <a href="javascript:void(0);" onclick="showSection('products'); filterProductsByImage('https://i.postimg.cc/HsVnBPcr/images.jpg'); scrollToProducts();">
+                                <img src="https://i.postimg.cc/HsVnBPcr/images.jpg" class="banner-img-responsive" alt="بانر 2">
+                            </a>
+                        </div>
+                        
+                        <div class="carousel-item">
+                            <a href="javascript:void(0);" onclick="showSection('products'); filterProductsByImage('https://i.postimg.cc/MpwTqZ3Q/image.jpg'); scrollToProducts();">
+                                <img src="https://i.postimg.cc/MpwTqZ3Q/image.jpg" class="banner-img-responsive" alt="بانر 3">
+                            </a>
+                        </div>
+                        
                     </div>
                     {% if site_info.banner_images|length > 1 %}
                     <button class="carousel-control-prev" type="button" data-bs-target="#main-banner-carousel" data-bs-slide="prev" style="filter:invert(1);">
