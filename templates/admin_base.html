@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - {{ title or '' }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    <style>
+        body { font-family: 'Tajawal', Arial, sans-serif; background: #f9f9f9; }
+        .admin-navbar { background: #fff; box-shadow: 0 2px 8px #eee; border-radius: 0 0 10px 10px; }
+        .admin-navbar a { margin-left: 15px; }
+        .container { margin-top: 30px; }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar admin-navbar navbar-expand-lg navbar-light mb-4">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="/admin">لوحة التحكم</a>
+            <div>
+                <a href="/" class="btn btn-info ms-2" style="font-weight:bold;">العودة للمتجر</a>
+                <a href="/admin/products" class="btn btn-link">المنتجات</a>
+                <a href="/admin/banner" class="btn btn-link">البنر</a>
+                <a href="/admin/site-info" class="btn btn-link">معلومات الموقع</a>
+                <a href="/admin/google-sheets" class="btn btn-link">Google Sheets</a>
+                <a href="/admin/logout" class="btn btn-danger">تسجيل الخروج</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html> 
