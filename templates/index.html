@@ -613,22 +613,22 @@
                     <div class="hero-desc">{{ site_info.description }}</div>
                     <button class="hero-btn" onclick="showSection('products'); scrollToProducts();">تصفح المنتجات <i class="fa fa-arrow-left"></i></button>
                 </div>
-                <!-- البنر مع أزرار التنقل -->
-                <div id="bannerCarousel" class="banner-carousel-container position-relative">
-                    {% if banners and banners|length > 1 %}
-                    <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev" style="position:absolute;top:50%;left:10px;transform:translateY(-50%);z-index:2;background:#fff;border-radius:50%;border:none;width:32px;height:32px;display:flex;align-items:center;justify-content:center;">
-                        <span aria-hidden="true">&#8592;</span>
-                    </button>
-                    {% endif %}
-                    {% if banners and banners|length > 0 %}
-                        <img src="{{ banners[0].image_url }}" alt="بنر" class="banner-img-responsive">
-                    {% else %}
-                        <img src="/static/images/banner_signal----_002.png" alt="بنر افتراضي" class="banner-img-responsive">
-                    {% endif %}
-                    {% if banners and banners|length > 1 %}
-                    <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);z-index:2;background:#fff;border-radius:50%;border:none;width:32px;height:32px;display:flex;align-items:center;justify-content:center;">
-                        <span aria-hidden="true">&#8594;</span>
-                    </button>
+                <!-- البنر مع سلايدر Bootstrap Carousel -->
+                <div id="main-banner-carousel" class="carousel slide banner-carousel-container position-relative" data-bs-ride="carousel">
+                    <div class="carousel-inner h-100">
+                        {% for banner in banners %}
+                            <div class="carousel-item h-100 {% if loop.first %}active{% endif %}">
+                                <img src="{{ banner.image_url }}" alt="بنر {{ loop.index }}" class="banner-img-responsive">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% if banners|length > 1 %}
+                        <button class="carousel-control-prev" type="button" data-bs-target="#main-banner-carousel" data-bs-slide="prev" style="position:absolute;top:50%;left:10px;transform:translateY(-50%);z-index:2;background:#fff;border-radius:50%;border:none;width:32px;height:32px;display:flex;align-items:center;justify-content:center;">
+                            <span aria-hidden="true">&#8592;</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#main-banner-carousel" data-bs-slide="next" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);z-index:2;background:#fff;border-radius:50%;border:none;width:32px;height:32px;display:flex;align-items:center;justify-content:center;">
+                            <span aria-hidden="true">&#8594;</span>
+                        </button>
                     {% endif %}
                 </div>
             </div>
