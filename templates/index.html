@@ -230,6 +230,43 @@
             .latest-products-list .product-img-box { width: 90px; height: 90px; border-radius: 8px; }
             .latest-products-list .product-img-box img { border-radius: 8px; }
         }
+        #main-banner-carousel .carousel-item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 0 0 18px 0;
+        }
+        @media (max-width: 600px) {
+            #main-banner-carousel .carousel-item img {
+                height: 120px;
+                border-radius: 0 0 12px 0;
+            }
+        }
+        @media (max-width: 400px) {
+            #main-banner-carousel .carousel-item img {
+                height: 80px;
+                border-radius: 0 0 8px 0;
+            }
+        }
+        .latest-products-list .product-img-box {
+            width: 120px;
+            height: 120px;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #f8f8f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .latest-products-list .product-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 14px;
+            display: block;
+            background: #f8f8f8;
+        }
     </style>
 </head>
 <body>
